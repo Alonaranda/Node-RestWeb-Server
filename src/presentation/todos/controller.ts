@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { CreateTodoDTO } from '../../domain/dtos/todos/create-todo.dto';
 
 const toDos = [
     { id: 1, text: 'Buy milk', createdAt: new Date() },
@@ -29,6 +30,7 @@ export class TodosController {
 
     // CREATE
     public createTodo = (req:Request, res:Response) => {
+        const [error, createTodoDto] = CreateTodoDTO.create(req.body);
         const {text} = req.body;
         if(!text) res.status(400).json({error: 'Text property is required'});
         const newTodo = {
